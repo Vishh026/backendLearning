@@ -13,10 +13,11 @@ router.post("/register", async (req, res) => {
 
   const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY);
 
+  res.cookie("token",token)
+
   res.status(201).json({
     message: "User Register successfully",
-    user,
-    token,
+    user
   });
 });
 
@@ -46,7 +47,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/users", async (req, res) => {
-  const { token } = req.body;
+  const { token } = req.cookies;
 
   if (!token) {
     return res.status(401).json({
@@ -60,6 +61,8 @@ router.get("/users", async (req, res) => {
     const user = await userModel.findOne({
         _id:decoded.id
     }).select("-password -__v");
+
+    
 
     res.status(200).json({
         message:"Data fetch successfully",
