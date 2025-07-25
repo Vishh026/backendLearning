@@ -1,5 +1,5 @@
 const express = require('express')
-const mainRoutes = require("./Routes/user.routes")
+const mainRoutes = require("./Routes/auth.routes")
 
 // creating server
 const app = express()
